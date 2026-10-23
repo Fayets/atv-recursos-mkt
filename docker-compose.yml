@@ -3,5 +3,5 @@ services:
     build: .
     container_name: recursos-mkt
     ports:
-      - "127.0.0.1:8097:80"
+      - "127.0.0.1:8137:80"
     restart: unless-stopped

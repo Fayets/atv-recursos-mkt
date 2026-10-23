@@ -18,7 +18,7 @@ npm run dev
 
 ## Producción
 
-Comparte `recursos.atvos.io` con la landing del webinar. El build lleva `base: '/mkt/'` para que sus archivos no choquen con los `/assets/` del webinar. El nginx del host manda `/video`, `/biblioteca`, `/mkt/` y `/api/contenido/` a este contenedor (`127.0.0.1:8097`).
+Comparte `recursos.atvos.io` con la landing del webinar. El build lleva `base: '/mkt/'` para que sus archivos no choquen con los `/assets/` del webinar. El nginx del host manda `/video`, `/biblioteca`, `/mkt/` y `/api/contenido/` a este contenedor (`127.0.0.1:8137`).
 
 ```
 docker compose up -d --build
