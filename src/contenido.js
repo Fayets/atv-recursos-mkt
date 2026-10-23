@@ -56,3 +56,27 @@ export const miniatura = (youtube) => (youtube ? `https://i.ytimg.com/vi/${youtu
 // nginx de esta app los trae por /api/contenido/archivos/, así siguen siendo del mismo dominio.
 export const archivo = (ruta) =>
   ruta && ruta.startsWith('/uploads/') ? `${BASE}/archivos/${ruta.slice('/uploads/'.length)}` : ruta || null
+
+// ---- La página de clases (la raíz): series de Juan servidas por ATV Ops ----
+
+export async function getClases() {
+  const res = await fetch(`${BASE}/clases`)
+  if (!res.ok) throw new Error('No se pudieron cargar las clases. Probá de nuevo en un rato.')
+  return res.json()
+}
+
+// Una visita por persona y día: la cuenta Ops, acá solo se avisa al entrar.
+export function visitaClases() {
+  const cuerpo = JSON.stringify({ sesion: sesion() })
+  const blob = new Blob([cuerpo], { type: 'text/plain' })
+  if (navigator.sendBeacon?.(`${BASE}/clases/visita`, blob)) return
+  fetch(`${BASE}/clases/visita`, { method: 'POST', body: cuerpo, keepalive: true }).catch(() => {})
+}
+
+// El link de Fathom y el del Drive no viajan en el JSON: se pasa por /ir, que cuenta el clic
+// y redirige. Así el número sale igual aunque la persona abra en otra pestaña o copie el link.
+export const irHref = (slug) => `${BASE}/clases/${encodeURIComponent(slug)}/ir?s=${sesion()}`
+
+// Las portadas están en esta app (public/clases); el JSON trae solo el nombre del archivo.
+export const portadaClase = (archivo) =>
+  archivo ? `${import.meta.env.BASE_URL}clases/${archivo}` : null
