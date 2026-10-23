@@ -43,4 +43,15 @@ export function partesTitular(texto) {
     p.startsWith('*') && p.endsWith('*') ? { rojo: true, t: p.slice(1, -1) } : { rojo: false, t: p })
 }
 
+// "**Mirá el video completo** y llevate…" → la parte entre dobles asteriscos va en negrita.
+export function partesNegrita(texto) {
+  return String(texto || '').split(/(\*\*[^*]+\*\*)/).filter(Boolean).map((p) =>
+    p.startsWith('**') && p.endsWith('**') && p.length > 4 ? { negrita: true, t: p.slice(2, -2) } : { negrita: false, t: p })
+}
+
 export const miniatura = (youtube) => (youtube ? `https://i.ytimg.com/vi/${youtube}/hqdefault.jpg` : null)
+
+// Las miniaturas y los videos de las historias viven en ATV Ops (/uploads/ig, /uploads/yt). El
+// nginx de esta app los trae por /api/contenido/archivos/, así siguen siendo del mismo dominio.
+export const archivo = (ruta) =>
+  ruta && ruta.startsWith('/uploads/') ? `${BASE}/archivos/${ruta.slice('/uploads/'.length)}` : ruta || null

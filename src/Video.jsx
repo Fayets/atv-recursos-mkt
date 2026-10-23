@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Encabezado from './Encabezado.jsx'
 import { IconoDescarga, IconoWhatsapp } from './Iconos.jsx'
 import Reproductor from './Reproductor.jsx'
-import { descargarHref, evento, getContenido, partesTitular, whatsappHref } from './contenido.js'
+import { descargarHref, evento, getContenido, partesNegrita, partesTitular, whatsappHref } from './contenido.js'
 import './juan.css'
 
 /** El recurso del momento: el video de Juan y el recurso, que se descarga o se pide por WhatsApp. */
@@ -42,21 +42,23 @@ export default function Video() {
     <main className="jv">
       <Encabezado />
       <section className="jv-hero">
-        <span className="jv-pill">Video + recurso</span>
+        {r.etiqueta && <span className="jv-pill">{r.etiqueta}</span>}
         <h1 className="jv-h1">
           {partesTitular(r.titular).map((p, i) => (p.rojo ? <em key={i}>{p.t}</em> : <span key={i}>{p.t}</span>))}
         </h1>
         <p className="jv-sub">
-          <b>Mirá el video completo</b> y {regalo ? 'llevate el recurso' : 'pedime el recurso por WhatsApp'} para armar tu propio proceso.
+          {r.bajada
+            ? partesNegrita(r.bajada).map((p, i) => (p.negrita ? <b key={i}>{p.t}</b> : <span key={i}>{p.t}</span>))
+            : <><b>Mirá el video completo</b> y {regalo ? 'llevate el recurso' : 'pedime el recurso por WhatsApp'} para armar tu propio proceso.</>}
         </p>
         <Reproductor recurso={r} />
         {regalo ? (
           <a className="jv-cta" href={descargarHref(r.slug)} target="_blank" rel="noreferrer">
-            <IconoDescarga />Descargar recursos
+            <IconoDescarga />{r.boton || 'Descargar recursos'}
           </a>
         ) : (
           <a className="jv-cta wa" href={whatsappHref(r.slug, 'landing')} target="_blank" rel="noreferrer">
-            <IconoWhatsapp />Pedir el recurso por WhatsApp
+            <IconoWhatsapp />{r.boton || 'Pedir el recurso por WhatsApp'}
           </a>
         )}
         <Link className="jv-mas" to="/biblioteca">Ver todos los recursos →</Link>

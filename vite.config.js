@@ -11,6 +11,11 @@ export default defineConfig(({ command }) => ({
   plugins: [react()],
   server: {
     proxy: {
+      '/api/contenido/archivos': {
+        target: OPS,
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/api\/contenido\/archivos/, '/uploads'),
+      },
       '/api/contenido': {
         target: OPS,
         changeOrigin: true,
