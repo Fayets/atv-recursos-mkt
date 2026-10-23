@@ -19,7 +19,7 @@ export default defineConfig(({ command }) => ({
       '/api/contenido': {
         target: OPS,
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/api\/contenido/, '/api/recursos-publicos'),
+        rewrite: (p) => p.replace(/^\/api\/contenido\/?(?=$|\?)/, '/api/recursos-publicos').replace(/^\/api\/contenido/, '/api/recursos-publicos'),
       },
     },
   },

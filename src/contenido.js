@@ -3,7 +3,8 @@
 const BASE = '/api/contenido'
 
 export async function getContenido() {
-  const res = await fetch(BASE)
+  // Con barra: el host solo manda a esta app lo que empieza con /api/contenido/.
+  const res = await fetch(`${BASE}/`)
   if (!res.ok) throw new Error('No se pudieron cargar los recursos. Probá de nuevo en un rato.')
   return res.json()
 }
