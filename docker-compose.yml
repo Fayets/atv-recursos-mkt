@@ -1,0 +1,7 @@
+services:
+  frontend:
+    build: .
+    container_name: recursos-mkt
+    ports:
+      - "127.0.0.1:8097:80"
+    restart: unless-stopped

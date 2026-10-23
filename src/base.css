@@ -1,0 +1,12 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: #1b1a19;
+  color: #f3efe8;
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: #e5321f; color: #fff; }
+button, input { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
