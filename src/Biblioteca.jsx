@@ -74,7 +74,7 @@ export default function Biblioteca() {
                 <h2>{r.titulo}</h2>
                 {r.tema && <span className="jv-meta">{r.tema}</span>}
                 {nuevo ? (
-                  <Link className="jv-cta chico" to="/video">Ver el video y el recurso</Link>
+                  <Link className="jv-cta chico" to="/">Ver el video y el recurso</Link>
                 ) : (
                   <a className="jv-cta chico wa" href={whatsappHref(r.slug, 'biblioteca')} target="_blank" rel="noreferrer">
                     <IconoWhatsapp />Pedir por WhatsApp
