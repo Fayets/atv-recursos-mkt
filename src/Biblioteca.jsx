@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import Encabezado from './Encabezado.jsx'
-import { IconoWhatsapp } from './Iconos.jsx'
-import { evento, getContenido, miniatura, whatsappHref } from './contenido.js'
+import { IconoDescarga, IconoWhatsapp } from './Iconos.jsx'
+import { descargarHref, evento, getContenido, miniatura, whatsappHref } from './contenido.js'
 import './juan.css'
 
 const sinAcentos = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
 /**
  * Todos los recursos que Juan regaló. Los viejos se piden siempre por WhatsApp; el del momento
- * lleva a la landing, donde está el video. Con ?r=palabra (el link que manda el DM de un reel
+ * se descarga directo si es de regalo. Con ?r=palabra (el link que manda el DM de un reel
  * viejo) se cuenta la visita para ese recurso y su tarjeta queda marcada.
  */
 export default function Biblioteca() {
@@ -40,6 +40,7 @@ export default function Biblioteca() {
   }, [datos, q])
 
   const destacado = datos?.destacado?.slug
+  const regalo = datos?.destacado?.entrega === 'regalo'
   return (
     <main className="jv">
       <Encabezado />
@@ -73,8 +74,10 @@ export default function Biblioteca() {
                 <span className="jv-kw">Comentá {r.palabra}</span>
                 <h2>{r.titulo}</h2>
                 {r.tema && <span className="jv-meta">{r.tema}</span>}
-                {nuevo ? (
-                  <Link className="jv-cta chico" to="/">Ver el video y el recurso</Link>
+                {nuevo && regalo ? (
+                  <a className="jv-cta chico" href={descargarHref(r.slug, 'biblioteca')}>
+                    <IconoDescarga />Llevate el recurso
+                  </a>
                 ) : (
                   <a className="jv-cta chico wa" href={whatsappHref(r.slug, 'biblioteca')} target="_blank" rel="noreferrer">
                     <IconoWhatsapp />Pedir por WhatsApp
